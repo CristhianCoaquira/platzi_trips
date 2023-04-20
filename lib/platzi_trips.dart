@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:platzi_trips/home_trips.dart';
+import 'package:platzi_trips/profile_trips.dart';
+import 'package:platzi_trips/search_trips.dart';
 
 class PlatziTrips extends StatefulWidget {
   const PlatziTrips({Key? key}) : super(key: key);
@@ -9,6 +11,20 @@ class PlatziTrips extends StatefulWidget {
 }
 
 class _PlatziTripsState extends State<PlatziTrips> {
+  int indexTap = 0;
+
+  final List<Widget> widgetsChildren = const [
+    HomeTrips(),
+    SearchTrips(),
+    ProfileTrips(),
+  ];
+
+  void onTapTapped(int index) {
+    setState(() {
+      indexTap = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,6 +34,10 @@ class _PlatziTripsState extends State<PlatziTrips> {
             primaryColor: Colors.purple
           ),
           child: BottomNavigationBar(
+            onTap: onTapTapped,
+            currentIndex: indexTap,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
             items: const [
               BottomNavigationBarItem(
                   icon: Icon(Icons.home),
@@ -34,7 +54,7 @@ class _PlatziTripsState extends State<PlatziTrips> {
             ],
           )
       ),
-      body: const HomeTrips(),
+      body: widgetsChildren[indexTap],
     );
   }
 }
